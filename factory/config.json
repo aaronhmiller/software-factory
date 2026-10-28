@@ -9,13 +9,13 @@
     "needs_human": "factory:needs-human"
   },
   "routing": {
-    "low":    { "builder": "sonnet", "code": "haiku" },
-    "medium": { "builder": "sonnet", "code": "sonnet" },
-    "high":   { "builder": "opus",   "code": "sonnet" }
+    "low":    { "builder": "sonnet", "code": "haiku",  "coderabbit": "haiku" },
+    "medium": { "builder": "sonnet", "code": "sonnet", "coderabbit": "haiku" },
+    "high":   { "builder": "opus",   "code": "sonnet", "coderabbit": "sonnet" }
   },
   "surface_reviewers": {
     "ui": { "ux": "sonnet", "ui": "haiku" },
-    "security": { "security": "opus" }
+    "security": { "security": "opus", "coderabbit-security": "sonnet" }
   },
   "protected_paths": [
     "factory/checks.sh",
