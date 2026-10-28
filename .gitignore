@@ -1,0 +1,11 @@
+# Factory runtime state: one folder per job, local to the machine running it.
+/factory/jobs/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Local Claude Code overrides
+.claude/settings.local.json
+
+.DS_Store

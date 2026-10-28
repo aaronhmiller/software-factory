@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculator</title>
+<style>
+  body { font: 16px/24px system-ui, sans-serif; color: #222; background: #fff; margin: 0; padding: 24px 16px; }
+  main { max-width: 420px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 16px; }
+  form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  input { width: 110px; font: inherit; padding: 6px 8px; border: 1px solid #bbb; border-radius: 6px; }
+  button { font: inherit; padding: 6px 14px; border: 1px solid #222; border-radius: 6px; background: #222; color: #fff; cursor: pointer; }
+  #result { margin-top: 16px; font-weight: 600; min-height: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Calculator</h1>
+  <form id="calc">
+    <label>a <input id="a" type="number" value="2" required></label>
+    <span>+</span>
+    <label>b <input id="b" type="number" value="3" required></label>
+    <button type="submit">=</button>
+  </form>
+  <p id="result" aria-live="polite"></p>
+</main>
+<script>
+  const form = document.getElementById('calc')
+  const result = document.getElementById('result')
+  form.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const a = Number(document.getElementById('a').value)
+    const b = Number(document.getElementById('b').value)
+    result.textContent = String(a + b)
+  })
+</script>
+</body>
+</html>
