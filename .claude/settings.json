@@ -2,7 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(factory/bin/job merge *)",
-      "Bash(coderabbit review *)"
+      "Bash(factory/bin/cr-review *)"
     ]
   }
 }
