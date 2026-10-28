@@ -22,7 +22,7 @@ from pathlib import Path
 
 FACTORY = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((FACTORY / "config.json").read_text())
-LIMIT = 20 * 60
+LIMIT = 30 * 60
 WAIT = 9 * 60
 POLL = 5
 
@@ -61,13 +61,15 @@ def alive(pid):
 
 
 def complete(out):
+    """The `complete` event, or None while the review hasn't finished."""
     for line in out.read_text().splitlines():
         try:
-            if json.loads(line).get("type") == "complete":
-                return True
+            event = json.loads(line)
         except ValueError:
             continue
-    return False
+        if isinstance(event, dict) and event.get("type") == "complete":
+            return event
+    return None
 
 
 def wait(out):
@@ -79,8 +81,15 @@ def wait(out):
     pid, started = int(pid), float(started)
     end = time.time() + WAIT
     while True:
-        if complete(out):
-            print("done")
+        event = complete(out)
+        if event is not None:
+            # A review that finished but failed, or skipped files, didn't cover the branch.
+            outcome, unreviewed = event.get("outcome"), event.get("unreviewedFileCount") or 0
+            if outcome == "completed" and not unreviewed:
+                print("done")
+            else:
+                print(f"failed: the review finished with outcome {outcome!r} and "
+                      f"{unreviewed} unreviewed files: {str(event.get('message', ''))[:300]}")
             return
         if not alive(pid):
             tail = out.read_text().strip().splitlines()[-1:] or ["no output"]
