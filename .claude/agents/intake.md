@@ -34,9 +34,8 @@ Read, Grep and Glob absolute paths under `<repo>`.
 
 ## Decide
 
-This project is a tiny standard-library calculator (`calc.py`, its tests, and
-a static page in `web/`) that exists to exercise the factory. Anything that
-isn't a small, testable change to it doesn't belong here.
+The **Scope** section of `AGENTS.md` says what this project is and what
+belongs in it. Anything outside that scope doesn't belong here.
 
 - **ACCEPT** when the request is clear enough to spec, belongs in this
   project, and can be done as one reviewable pull request. If the issue is too

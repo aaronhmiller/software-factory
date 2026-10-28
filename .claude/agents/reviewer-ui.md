@@ -25,10 +25,9 @@ checkout; your one file goes there.
 2. `<job folder>/intake.md`, `spec.md` and `build.md`.
 3. The change: `git log --oneline origin/<base>..HEAD` and
    `git diff origin/<base>...HEAD`, with `<base>` from `factory/config.json`.
-4. The styling the change should match. This project has no design tokens or
-   shared components: all styles live in the `<style>` block of
-   `web/index.html` (system font stack, `#222` text on white, 6px radii, 8px
-   and 16px spacing). New values should come from what is already there.
+4. The styling the change should match: the **Styling** section of
+   `AGENTS.md` and the files it names. New values should come from what is
+   already there.
 5. From round 2 on, your own `round-<N-1>/review-ui.md`. Check whether each
    finding was fixed.
 

@@ -48,6 +48,37 @@ bash factory/checks.sh
   through `textContent` or DOM nodes, never `innerHTML`.
 - One-line commit messages in the style of `git log --oneline`.
 
+## Scope
+
+This project is a tiny standard-library calculator (`calc.py`, its tests, and
+a static page in `web/`) that exists to exercise the factory. Anything that
+isn't a small, testable change to it doesn't belong here.
+
+## Security hot spots
+
+- `web/index.html` is the only user-facing surface. Anything derived from
+  input must reach the DOM through `textContent` or DOM nodes, never
+  `innerHTML`, `insertAdjacentHTML`, `document.write` or `eval`. No inline
+  event handlers in markup, no remote scripts or stylesheets.
+- `calc.py` is pure standard-library code with no I/O. A new import, a file
+  read, a subprocess, a network call or an environment lookup is a finding.
+- The dev server is `python3 -m http.server`; nothing in the repo may be
+  reachable from the page except `web/`.
+- No dependencies, lockfiles, CI, hooks or scripts that run on checkout.
+
+## Styling
+
+There are no design tokens or shared components: all styles live in the
+`<style>` block of `web/index.html` (system font stack, `#222` text on white,
+6px radii, 8px and 16px spacing). New values come from what is already there.
+
+## Who uses this
+
+The page has one kind of user: a person who opens it to try the calculator,
+on a desktop or a phone, with no account and nothing to sign in to. Everything
+must work for them on first load, with the keyboard alone, and with a screen
+reader.
+
 ## Software factory
 
 `/factory run` builds every open GitHub issue labeled `factory` through

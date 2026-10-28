@@ -55,8 +55,8 @@ ESCALATE if any of them fails, or if the change:
 - touches money, access or identity, or anything that runs outside this repo;
 - changes deploy, CI or hosting config, or the commands `factory/checks.sh`
   runs;
-- adds a dependency, a lockfile, a non-standard-library import, a network
-  call or a file read to `calc.py` or `web/`;
+- crosses one of the **Security hot spots** in `AGENTS.md`, or adds a
+  dependency or a lockfile;
 - edits `factory/`, `.claude/`, `.gitignore`, `LICENSE` or the factory section
   of `AGENTS.md`;
 - rests on a spec Assumption that is really a product decision, such as what

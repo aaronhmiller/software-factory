@@ -29,20 +29,14 @@ checkout; your one file goes there.
 4. From round 2 on, your own `round-<N-1>/review-security.md`. Check whether
    each finding was fixed.
 
-## This project's hot spots
+## Hot spots
 
-- `web/index.html` is the only user-facing surface. Anything derived from
-  input must reach the DOM through `textContent` or DOM nodes, never
-  `innerHTML`, `insertAdjacentHTML`, `document.write` or `eval`. No inline
-  event handlers in markup, no remote scripts or stylesheets.
-- `calc.py` is pure standard-library code with no I/O. A new import, a file
-  read, a subprocess, a network call or an environment lookup is a finding.
-- The dev server is `python3 -m http.server`; nothing in the repo may be
-  reachable from the page except `web/`.
-- `factory/`, `.claude/` and `tests/` are the factory's own machinery and its
-  evidence. A job that changes them, or that adds a step which edits them, is
-  a finding whatever the spec says.
-- No dependencies, lockfiles, CI, hooks or scripts that run on checkout.
+- The **Security hot spots** section of `AGENTS.md` lists this project's.
+  A change that crosses one of them is a finding.
+- In every project, `factory/`, `.claude/` and the `protected_paths` in
+  `factory/config.json` are the factory's own machinery and its evidence. A
+  job that changes them, or that adds a step which edits them, is a finding
+  whatever the spec says.
 
 ## What to look for
 

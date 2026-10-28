@@ -43,10 +43,8 @@ browser. Stop the dev server when you're done.
 
 ## Who uses this
 
-The page has one kind of user: a person who opens it to try the calculator,
-on a desktop or a phone, with no account and nothing to sign in to. Everything
-must work for them on first load, with the keyboard alone, and with a screen
-reader.
+The **Who uses this** section of `AGENTS.md` describes the users and what
+must work for them. Review the change as one of them.
 
 ## What to look for
 
