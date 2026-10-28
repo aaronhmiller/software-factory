@@ -47,6 +47,11 @@ APPROVE only if all of these hold:
 
 ESCALATE if any of them fails, or if the change:
 
+- has security, authentication or authorization implications: intake rated
+  the risk `high` or flagged the `security` surface, the security review ran,
+  or the diff touches credentials, tokens, sessions, permissions, who may do
+  what, or input that reaches a shell, a file path, HTML or the network.
+  These merge only when a human merges the PR;
 - touches money, access or identity, or anything that runs outside this repo;
 - changes deploy, CI or hosting config, or the commands `factory/checks.sh`
   runs;
