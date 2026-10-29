@@ -27,7 +27,8 @@ builder (sonnet, opus when risky) → commits, pushes, opens a draft PR "Closes 
         ▼            ▲
 gate (script) ─FAIL──┤  factory/checks.sh; no reviewer runs on a failing build
         ▼ PASS       │
-reviewers ─CHANGES───┘  code (haiku | sonnet), + ux & ui on UI changes, + security
+reviewers ─CHANGES───┘  code (haiku | sonnet) + CodeRabbit, + ux & ui on UI changes,
+        │                + security + CodeRabbit security on security changes
         ▼ all PASS
 approver (opus) ── APPROVE  → sync with main, gate again, gh pr merge
                 └─ ESCALATE → PR ready for you, issue labeled factory:needs-human
@@ -54,7 +55,10 @@ You approve by merging the PR on GitHub.
     spec-writer.md            opus     spec.md
     builder.md                routed   code, commits, the PR, build.md
     reviewer-code.md          routed   correctness, scope, simplicity, tests
+    reviewer-coderabbit.md    routed   runs the CodeRabbit CLI on the branch, keeps confirmed major findings
     reviewer-security.md      opus     only when intake flags `security`
+    reviewer-coderabbit-security.md
+                              sonnet   only when intake flags `security`; deep CodeRabbit review, security findings only
     reviewer-ux.md            sonnet   only when intake flags `ui`
     reviewer-ui.md            haiku    only when intake flags `ui`
     approver.md               opus     APPROVE or ESCALATE
@@ -64,6 +68,7 @@ factory/
   bin/job                     the only writer of job.json; refuses illegal moves; merges
   bin/gate                    runs checks.sh in a job's worktree → round-N/checks.md
   bin/route                   risk + surfaces → the job's reviewers and models
+  bin/cr-review               runs a CodeRabbit review detached and waits for it (reviews outlast one Bash call)
   dashboard.html              the board
 AGENTS.md                     what every agent reads first
 ```
@@ -89,6 +94,13 @@ cost and time. Click a card to read every file the job wrote.
   gh label create factory:needs-info --color FBCA04 --description "The factory asked the author a question"
   gh label create factory:needs-human --color D93F0B --description "The factory needs a human decision on the PR"
   ```
+
+- The [CodeRabbit CLI](https://docs.coderabbit.ai/cli), installed and signed in
+  (`coderabbit auth login`; `coderabbit doctor` checks it), for the two
+  CodeRabbit reviewers. It allows a limited number of reviews per hour
+  (`coderabbit usage` shows yours), and each job uses one or two per round. When the CLI is
+  missing or over its limit, those reviewers report an error and the job waits
+  in review until `/factory run` resumes it.
 
 - Optional: the [`agent-browser`](https://github.com/vercel-labs/agent-browser)
   CLI, so the builder and the UX and UI reviewers can drive the page. Without
